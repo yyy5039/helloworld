@@ -15,7 +15,7 @@ int alpha_to [nn+1], index_of [nn+1], gg [nn-kk+1] ;
 int recd [nn], data [kk], bb [nn-kk] ;
 
 
-//generate_gf
+//generate_gf modify by local
 void generate_gf()
 /* 生成GF(2^m)空间 */
 {
