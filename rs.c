@@ -14,8 +14,10 @@ int pp[mm+1] = {1, 0, 1, 1, 1, 0, 0, 0, 1};
 int alpha_to [nn+1], index_of [nn+1], gg [nn-kk+1] ;
 int recd [nn], data [kk], bb [nn-kk] ;
 
+
+
 void generate_gf()
-/* Éú³ÉGF(2^m)¿Õ¼ä */
+/* ç”ŸæˆGF(2^m)ç©ºé—´ */
 {
 	register int i, mask ;
 	mask = 1 ;
@@ -45,7 +47,7 @@ void generate_gf()
 }
 
 void gen_poly()
-/* Éú³É---Éú³É¶àÏîÊ½*/
+/* ç”Ÿæˆ---ç”Ÿæˆå¤šé¡¹å¼*/
 {
 	register int i,j ;
 	gg[0] = 2 ;    /* primitive element alpha = 2  for GF(2**mm)  */
@@ -75,14 +77,14 @@ void gen_poly()
 }
 
 void encode_rs()
-/* ±àÂë*/
+/* ç¼–ç */
 {
 	register int i,j ;
 	int feedback ;
 	for (i=0; i<nn-kk; i++)   bb[i] = 0 ;
 	for (i=kk-1; i>=0; i--)
     {
-		//Öğ²½µÄ½«ÏÂÒ»²½Òª¼õµÄ£¬´æÈëbb(i)
+		//é€æ­¥çš„å°†ä¸‹ä¸€æ­¥è¦å‡çš„ï¼Œå­˜å…¥bb(i)
 		feedback = index_of[data[i]^bb[nn-kk-1]] ;
 		if(feedback != -1)
         {
@@ -103,12 +105,12 @@ void encode_rs()
 }
 
 void decode_rs()
- {/*½âÂë*/
+ {/*è§£ç */
 	register int i,j,u,q ;
 	int elp[nn-kk+2][nn-kk], d[nn-kk+2], l[nn-kk+2], u_lu[nn-kk+2], s[nn-kk+1] ;
 	int count=0, syn_error=0, root[tt], loc[tt], z[tt+1], err[nn], reg[tt+1] ;
 /* first form the syndromes */
-	for(i=0; i<nn; i++) //×ª»»³ÉGF¿Õ¼äµÄalphaÃİ´Î
+	for(i=0; i<nn; i++) //è½¬æ¢æˆGFç©ºé—´çš„alphaå¹‚æ¬¡
 		if(recd[i] == -1)
 			recd[i] = 0;
 		else
@@ -218,7 +220,7 @@ void decode_rs()
 		for (i=0; i<=l[u]; i++)   
 			elp[u][i] = index_of[elp[u][i]] ;
 /* find roots of the error location polynomial */
-		/*Çó´íÎóÎ»ÖÃ¶àÏîÊ½µÄ¸ù*/
+		/*æ±‚é”™è¯¯ä½ç½®å¤šé¡¹å¼çš„æ ¹*/
 		for (i=1; i<=l[u]; i++)
 			reg[i] = elp[u][i] ;
 		count = 0 ;
@@ -236,7 +238,7 @@ void decode_rs()
 				root[count] = i;
 				loc[count] = nn-i ;
 				count++ ;
-				printf("¸ù%d=%d\n", q, nn-i);
+				printf("æ ¹%d=%d\n", q, nn-i);
 			};
 		} ;
 		if (count==l[u])    /* no. roots = degree of elp hence <= tt errors */
@@ -257,7 +259,7 @@ void decode_rs()
 				z[i] = index_of[z[i]] ;         /* put into index form */
             } ;
   /* evaluate errors at locations given by error location numbers loc[i] */
-			/*¼ÆËã´íÎóÍ¼Ñù*/
+			/*è®¡ç®—é”™è¯¯å›¾æ ·*/
 			for (i=0; i<nn; i++)
 			{ 
 				err[i] = 0 ;
@@ -286,7 +288,7 @@ void decode_rs()
 			}
 		}
 		else    /* no. roots != degree of elp => >tt errors and cannot solve */
-		{	/*´íÎóÌ«¶à£¬ÎŞ·¨¸üÕı*/
+		{	/*é”™è¯¯å¤ªå¤šï¼Œæ— æ³•æ›´æ­£*/
 			for (i=0; i<nn; i++)        /* could return error flag if desired */
 				if (recd[i]!=-1)        /* convert recd[] to polynomial form*/
 					recd[i] = alpha_to[recd[i]] ;
@@ -295,7 +297,7 @@ void decode_rs()
 		}
 		}
 		else         /* elp has degree has degree >tt hence cannot solve */
-		{	/*´íÎóÌ«¶à£¬ÎŞ·¨¸üÕı*/
+		{	/*é”™è¯¯å¤ªå¤šï¼Œæ— æ³•æ›´æ­£*/
 			for (i=0; i<nn; i++)       /* could return error flag if desired */
 				if (recd[i]!=-1)        /* convert recd[] to polynomial form */
 					recd[i] = alpha_to[recd[i]] ;
