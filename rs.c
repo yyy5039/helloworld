@@ -8,7 +8,7 @@
 #define mm  8          /* RS code over GF(2**4) - change to suit */
 #define nn  255          /* nn=2**mm -1   length of codeword */
 #define tt  10           /* number of errors that can be corrected */
-#define kk  235           /* kk = nn-2*tt  */
+#define kk  235           /* kk = nn-2*tt    */
 
 int pp[mm+1] = {1, 0, 1, 1, 1, 0, 0, 0, 1};
 int alpha_to [nn+1], index_of [nn+1], gg [nn-kk+1] ;
